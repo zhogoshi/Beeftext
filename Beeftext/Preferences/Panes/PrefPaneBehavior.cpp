@@ -50,6 +50,7 @@ PrefPaneBehavior::PrefPaneBehavior(QWidget *parent)
     connect(ui_.checkAutoStart, &QCheckBox::toggled, this, &PrefPaneBehavior::onCheckAutoStart);
     connect(ui_.checkPlaySoundOnCombo, &QCheckBox::toggled, this, &PrefPaneBehavior::onCheckPlaySoundOnCombo);
     connect(ui_.checkUseCustomSound, &QCheckBox::toggled, this, &PrefPaneBehavior::onCheckUseCustomSound);
+    connect(ui_.checkAutoPressEnterAfterSubstitution, &QCheckBox::toggled, this, &PrefPaneBehavior::onCheckAutoPressEnterAfterSubstitution);
 
 
 
@@ -75,6 +76,8 @@ void PrefPaneBehavior::load() const {
     blocker = QSignalBlocker(ui_.checkUseCustomSound);
     ui_.checkUseCustomSound->setChecked(prefs_.useCustomSound());
     ui_.editCustomSound->setText(QDir::toNativeSeparators(prefs_.customSoundPath()));
+    blocker = QSignalBlocker(ui_.checkAutoPressEnterAfterSubstitution);
+    ui_.checkAutoPressEnterAfterSubstitution->setChecked(prefs_.autoPressEnterAfterSubstitution());
     SpShortcut const shortcut = prefs_.appEnableDisableShortcut();
     blocker = QSignalBlocker(ui_.checkAppEnableDisable);
     ui_.checkAppEnableDisable->setChecked(prefs_.enableAppEnableDisableShortcut());
@@ -263,6 +266,14 @@ bool PrefPaneBehavior::validateInput() {
         }
     }
     return true;
+}
+
+
+//****************************************************************************************************************************************************
+/// \param[in] checked Is the checkbox checked.
+//****************************************************************************************************************************************************
+void PrefPaneBehavior::onCheckAutoPressEnterAfterSubstitution(bool checked) const {
+    prefs_.setAutoPressEnterAfterSubstitution(checked);
 }
 
 

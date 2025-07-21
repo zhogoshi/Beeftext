@@ -358,6 +358,10 @@ void performTextSubstitution(qint32 charCount, QString const &newText, qint32 cu
         // position the cursor if needed by typing the right amount of left key strokes
         if (cursorPos >= 0)
             moveCursorLeft(qMax<qint32>(0, printableCharacterCount(text) - cursorPos));
+
+        // Auto-press Enter if enabled
+        if (prefs.autoPressEnterAfterSubstitution())
+            synthesizeKeyDownAndUp(VK_RETURN);
     }
     catch (Exception const &) {
         inputManager.setKeyboardHookEnabled(wasKeyboardHookEnabled);

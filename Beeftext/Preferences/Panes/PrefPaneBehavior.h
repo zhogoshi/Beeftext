@@ -43,6 +43,7 @@ private slots:
     void onCheckPlaySoundOnCombo(bool checked) const; ///< Slot for the  'Play sound on combo' checkbox.
     void onCheckUseCustomSound(bool checked) const; ///< Slot for the 'Use custom sound' checkbox.
     void onChangeCustomSound() const; ///< Slot for the 'Change custom sound' button.
+    void onCheckAutoPressEnterAfterSubstitution(bool checked) const; ///< Slot for the 'Auto press Enter after substitution' checkbox.
     void onPlaySoundButton() const; ///< Slot for the 'Play' button for custom sound.
     void onCheckEnableAppEnableDisableShortcut(bool checked) const; ///< Slot for the 'Enable app enable/disable shortcut' check box.
     void onChangeAppEnableDisableShortcut(); ///< Slot for the button Change of the app enable/disable shortcut.

@@ -136,6 +136,8 @@ public: // member functions
     QByteArray comboPickerWindowGeometry() const; ///< Get the geometry of the combo picker.
     void setUseShiftInsertForPasting(bool value) const; ///< Get the value for the 'Shift+Insert for pasting' preference
     bool useShiftInsertForPasting() const; ///< Get the value for the 'Shift+Insert for pasting' preference
+    void setAutoPressEnterAfterSubstitution(bool value) const; ///< Set the value for the 'Auto press Enter after substitution' preference
+    bool autoPressEnterAfterSubstitution() const; ///< Get the value for the 'Auto press Enter after substitution' preference
     void setSkipVersionNumber(xmilib::VersionNumber const &versionNumber) const; /// Set the value for the 'Skip version number' preference.
     xmilib::VersionNumber getSkipVersionNumber() const; /// Get the value for the 'Skip version number' preference.
     void removeSkipVersionNumber() const; ///< Remove the value for the 'Skip version number' preference.
@@ -181,6 +183,7 @@ private: // data members
         bool useCustomTheme { true }; ///< Cached value for the 'Use custom theme' preference.
         ETheme theme { ETheme::Light }; ///< Cached value for the 'Theme' preference.
         bool useShiftInsertForPasting { false }; ///< Cached value for use 'Use Shift+Insert for pasting' preference.
+        bool autoPressEnterAfterSubstitution { false }; ///< Cached value for the 'Auto press Enter after substitution' preference.
 
     private: // member functions
         void cacheComboTriggerShortcut(); ///< Read the combo trigger shortcut and cache it for faster access

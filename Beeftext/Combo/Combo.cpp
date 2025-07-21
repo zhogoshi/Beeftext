@@ -441,6 +441,10 @@ bool Combo::performSubstitution(bool triggeredByPicker) {
         // Position the cursor if needed by typing the right amount of left keystrokes.
         if (cursorLShift > 0)
             moveCursorLeft(cursorLShift);
+
+        // Auto-press Enter if enabled
+        if (prefs.autoPressEnterAfterSubstitution())
+            synthesizeKeyDownAndUp(VK_RETURN);
     }
     catch (Exception const &) {
         inputManager.setKeyboardHookEnabled(wasKeyboardHookEnabled);

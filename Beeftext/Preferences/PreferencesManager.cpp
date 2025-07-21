@@ -83,6 +83,7 @@ QString const kKeyTheme = "Theme"; ///< The setting key for the 'Theme' preferen
 QString const kKeyComboPickerWindowGeometry = "ComboPickerWindowGeometry"; ///< The settings key for the combo picker geometry.
 QString const kKeyUseShiftInsertForPasting = "UseShiftInsertForPasting"; ///< The settings key for the 'Use Shift+Insert for pasting' preference
 QString const kKeySkipVersionNumber = "SkipVersionNumber"; ///< The settings key for the 'skip version number' preference.
+QString const kKeyAutoPressEnterAfterSubstitution = "AutoPressEnterAfterSubstitution"; ///< The settings key for the 'Auto press Enter after substitution' preference.
 
 
 SpShortcut const kDefaultAppEnableDisableShortcut = Shortcut::fromModifiersAndKey(Qt::AltModifier | Qt::ShiftModifier
@@ -122,6 +123,7 @@ bool constexpr kDefaultKeepFinalSpaceCharacter = false; ///< The default value f
 bool constexpr kDefaultUseCustomPowershellVersion = false; ///< The default value for the 'Use custom PowerShell version' preference.
 ETheme constexpr kDefaultTheme = ETheme::Light; ///< The default value for the theme preference.
 bool constexpr kDefaultUseShiftInsertForPasting = false; ///< The default value for the 'Use Shift+Insert for pasting' preference.
+bool constexpr kDefaultAutoPressEnterAfterSubstitution = false; ///< The default value for the 'Auto press Enter after substitution' preference.
 
 }
 
@@ -212,6 +214,7 @@ void PreferencesManager::Cache::init() {
     emojiRightDelimiter = ::readSettings<QString>(settings_, kKeyEmojiRightDelimiter, kDefaultEmojiRightDelimiter);
     beeftextEnabled = ::readSettings<bool>(settings_, kKeyBeeftextEnabled, kDefaultBeeftextEnabled);
     useShiftInsertForPasting = ::readSettings<bool>(settings_, kKeyUseShiftInsertForPasting, kDefaultUseShiftInsertForPasting);
+    autoPressEnterAfterSubstitution = ::readSettings<bool>(settings_, kKeyAutoPressEnterAfterSubstitution, kDefaultAutoPressEnterAfterSubstitution);
 }
 
 
@@ -394,6 +397,7 @@ void PreferencesManager::reset() {
     this->setUseLegacyCopyPaste(kDefaultUseLegacyCopyPaste);
     this->setRestoreClipboardAfterSubstitution(kDefaultRestoreClipboardAfterSubstitution);
     this->setUseShiftInsertForPasting(kDefaultUseShiftInsertForPasting);
+    this->setAutoPressEnterAfterSubstitution(kDefaultAutoPressEnterAfterSubstitution);
     if (!isInPortableMode()) {
         this->setAutoStartAtLogin(kDefaultAutoStartAtLogin);
         this->setComboListFolderPath(globals::appDataDir());
@@ -545,6 +549,7 @@ void PreferencesManager::toJsonDocument(QJsonDocument &outDoc) const {
     object[kKeyUseLegacyCopyPaste] = this->readSettings<bool>(kKeyUseLegacyCopyPaste, kDefaultUseLegacyCopyPaste);
     object[kKeyRestoreClipboardAfterSubstitution] = this->readSettings(kKeyRestoreClipboardAfterSubstitution, kDefaultRestoreClipboardAfterSubstitution);
     object[kKeyUseShiftInsertForPasting] = this->readSettings<bool>(kKeyUseShiftInsertForPasting, kDefaultUseShiftInsertForPasting);
+    object[kKeyAutoPressEnterAfterSubstitution] = this->readSettings<bool>(kKeyAutoPressEnterAfterSubstitution, kDefaultAutoPressEnterAfterSubstitution);
     outDoc = QJsonDocument(object);
 }
 
@@ -598,6 +603,7 @@ void PreferencesManager::fromJsonDocument(QJsonDocument const &doc) const {
     this->setUseLegacyCopyPaste(objectValue<bool>(object, kKeyUseLegacyCopyPaste));
     settings_->setValue(kKeyRestoreClipboardAfterSubstitution, objectValue<bool>(object, kKeyRestoreClipboardAfterSubstitution));
     this->setUseShiftInsertForPasting(objectValue<bool>(object, kKeyUseShiftInsertForPasting));
+    this->setAutoPressEnterAfterSubstitution(objectValue<bool>(object, kKeyAutoPressEnterAfterSubstitution));
     this->init();
 }
 
@@ -1489,6 +1495,23 @@ VersionNumber PreferencesManager::getSkipVersionNumber() const {
 //****************************************************************************************************************************************************
 void PreferencesManager::removeSkipVersionNumber() const {
     settings_->remove(kKeySkipVersionNumber);
+}
+
+
+//****************************************************************************************************************************************************
+/// \param[in] value The value for the preference
+//****************************************************************************************************************************************************
+void PreferencesManager::setAutoPressEnterAfterSubstitution(bool value) const {
+    cache_->autoPressEnterAfterSubstitution = value;
+    settings_->setValue(kKeyAutoPressEnterAfterSubstitution, value);
+}
+
+
+//****************************************************************************************************************************************************
+/// \return The value for the preference
+//****************************************************************************************************************************************************
+bool PreferencesManager::autoPressEnterAfterSubstitution() const {
+    return cache_->autoPressEnterAfterSubstitution;
 }
 
 
